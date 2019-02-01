@@ -7,4 +7,4 @@ class UsersAppConfig(AppConfig):
     """Users app config."""
 
     name = 'cride.users'
-    varbose_name = 'Users'
+    verbose_name = 'Users'
