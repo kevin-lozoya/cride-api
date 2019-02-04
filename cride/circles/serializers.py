@@ -24,7 +24,12 @@ class CreateCircleSerializer(serializers.Serializer):
     """Create circle serializer."""
 
     name = serializers.CharField(max_length=140)
-    slug_name = serializers.SlugField(max_length=40, validators=[UniqueValidator(queryset=Circle.objects.all())])
+    slug_name = serializers.SlugField(
+        max_length=40, 
+        validators=[
+            UniqueValidator(queryset=Circle.objects.all())
+        ]
+    )
 
     about = serializers.CharField(max_length=255, required=False)
 
