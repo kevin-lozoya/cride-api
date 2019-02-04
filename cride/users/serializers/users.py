@@ -1,10 +1,12 @@
 """Users serializers."""
 
 # Django
+from django.conf import settings
 from django.contrib.auth import authenticate, password_validation
 from django.core.mail import EmailMultiAlternatives
 from django.core.validators import RegexValidator
 from django.template.loader import render_to_string
+from django.utils import timezone
 
 # Django REST Framework
 from rest_framework import serializers
@@ -13,6 +15,10 @@ from rest_framework.validators import UniqueValidator
 
 # Models
 from cride.users.models import User, Profile
+
+# Utilities
+from datetime import timedelta
+import jwt
 
 
 class UserModelSerializer(serializers.ModelSerializer):
@@ -105,6 +111,7 @@ class UserSignUpSerializer(serializers.Serializer):
 
     def create(self, data):
         """Handle user and profile creation."""
+
         data.pop('password_confirmation')
         user = User.objects.create_user(**data, is_verified=False)
         Profile.objects.create(user=user)
@@ -113,6 +120,7 @@ class UserSignUpSerializer(serializers.Serializer):
 
     def send_confirmation_email(self, user):
         """Send account verification link to given user."""
+
         verification_token = self.gen_verification_token(user)
         subject = 'Welcome @{}! Verify your account to start using Comparte Ride'.format(user.username)
         from_email = 'Comparte Ride <noreply@comparteride.com>'
@@ -127,4 +135,12 @@ class UserSignUpSerializer(serializers.Serializer):
 
     def gen_verification_token(self, user):
         """Create JWT token that the user can use to verify its account."""
-        return '1234'
+
+        exp_date = timezone.now() + timedelta(seconds=1)
+        payload = {
+            'user': user.username,
+            'exp': int(exp_date.timestamp()),
+            'type': 'email_confirmation'
+        }
+        token = jwt.encode(payload, settings.SECRET_KEY, algorithm='HS256')
+        return token.decode()
