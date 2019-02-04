@@ -7,9 +7,10 @@ from rest_framework.views import APIView
 
 # Serializers
 from cride.users.serializers import (
+    AccountVerificationSerializer,
     UserLoginSerializer,
     UserModelSerializer,
-    UserSignUpSerializer)
+    UserSignUpSerializer,)
 
 
 class UserLoginAPIView(APIView):
@@ -39,3 +40,16 @@ class UserSignUpAPIView(APIView):
         user = serializer.save()
         data = UserModelSerializer(user).data
         return Response(data, status=status.HTTP_201_CREATED)
+
+
+class AccountVerificationAPIView(APIView):
+    """Account verification API View."""
+
+    def post(self, request, *args, **kwargs):
+        """Handle HTTP POST request."""
+
+        serializer = AccountVerificationSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        data = {'message': 'Congratilation, now go share some rides!'}
+        return Response(data, status=status.HTTP_200_OK)
