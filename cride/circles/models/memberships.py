@@ -42,7 +42,7 @@ class Membership(CRideModel):
     is_active = models.BooleanField(
         'active status',
         default=True,
-        help_text='Only active users are alloweb to interact in the circle.'
+        help_text='Only active users are allowed to interact in the circle.'
     )
 
     def __str__(self):
