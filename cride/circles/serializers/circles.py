@@ -21,7 +21,7 @@ class CircleModelSerializer(serializers.ModelSerializer):
         """Meta class."""
         model = Circle
         fields = (
-            'id', 'name', 'slug_name',
+            'name', 'slug_name',
             'about', 'picture',
             'rides_offered', 'rides_taken',
             'verified', 'is_public',
@@ -41,3 +41,4 @@ class CircleModelSerializer(serializers.ModelSerializer):
         is_limited = data.get('is_limited', False)
         if is_limited ^ bool(members_limit):
             raise serializers.ValidationError('If circle is limited, a member limit must bu provided.')
+        return data
