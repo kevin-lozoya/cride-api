@@ -8,7 +8,6 @@ from rest_framework.routers import DefaultRouter
 
 # Views
 from .views import rides as ride_views
-from .views import memberships as membership_views
 
 
 router = DefaultRouter()

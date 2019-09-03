@@ -20,3 +20,9 @@ class RideViewSet(mixins.CreateModelMixin,
 
     serializer_class = CreateRideSerializer
     permission_classes = [IsAuthenticated, IsActiveCircleMember]
+
+    def get_serializer_context(self):
+        """Add circle to serializer context."""
+        context = super(RideViewSet, self).get_serializer_context()
+        context['circle'] = self.circle
+        return context

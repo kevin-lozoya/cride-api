@@ -30,14 +30,14 @@ class CircleViewSet(mixins.CreateModelMixin,
     lookup_field = 'slug_name'
 
     # Filters
-    filter_backends = (SearchFilter, OrderingFilter, DjangoFilterBackend,)
+    filter_backends = (SearchFilter, DjangoFilterBackend, OrderingFilter)
     search_fields = ('slug_name', 'name',)
     ordering_fields = ('rides_offered', 'rides_taken', 'name', 'created', 'member_limit',)
-    ordering = ('-members__count', '-ried_offered', '-rides_taken',)
+    ordering = ('-members__count', '-rides_offered', '-rides_taken',)
     filter_fields = ('verified', 'is_limited',)
 
     def get_queryset(self):
-        """Restrict tlist to public-only."""
+        """Restrict list to public-only."""
         queryset = Circle.objects.all()
         if self.action == 'list':
             return queryset.filter(is_public=True)
