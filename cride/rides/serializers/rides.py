@@ -1,0 +1,34 @@
+"""Rides serializers."""
+
+from datetime import timedelta
+
+# Django
+from django.utils import timezone
+
+# DRF
+from rest_framework import serializers
+
+# Models
+from cride.rides.models import Ride
+
+
+class CreateRideSerializer(serializers.ModelSerializer):
+    """Create ride serializer."""
+
+    offered_by = serializers.HiddenField(default=serializers.CurrentUserDefault())
+    available_seats = serializers.IntegerField(min_value=1, max_value=15)
+
+    class Meta:
+        """Meta class."""
+
+        model = Ride
+        exclude = ('oferred_in', 'passengers', 'rating', 'is_active',)
+
+    def validate_departure_date(self, data):
+        """Verify date is not in the past."""
+        min_date = timezone.now() + timedelta(minutes=10)
+        if data < min_date:
+            raise serializers.ValidationError(
+                'Departure time mush be al least pass the next 20 minutes window.'
+            )
+        return data

@@ -16,22 +16,18 @@ from cride.circles.permissions.memberships import IsActiveCircleMember, IfSelfMe
 # Serializers
 from cride.circles.serializers import AddMemberSerializer, MembershipModelSerializer
 
+# Utilities
+from cride.utils.views import AddCicleMixin
+
 
 class MembershipViewSet(mixins.ListModelMixin,
                         mixins.CreateModelMixin,
                         mixins.RetrieveModelMixin,
                         mixins.DestroyModelMixin,
-                        viewsets.GenericViewSet):
+                        AddCicleMixin):
     """Circle membership view set."""
 
     serializer_class = MembershipModelSerializer
-
-    def dispatch(self, request, *args, **kwargs):
-        """Verify that the circle exists."""
-
-        slug_name = kwargs['slug_name']
-        self.circle = get_object_or_404(Circle, slug_name=slug_name)
-        return super(MembershipViewSet, self).dispatch(request, *args, **kwargs)
 
     def get_permissions(self):
         """Assign permission based on action."""
