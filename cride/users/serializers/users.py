@@ -66,8 +66,9 @@ class UserLoginSerializer(serializers.Serializer):
     def create(self, data):
         """Generate or retrieve new token."""
 
-        token, created = Token.objects.get_or_create(user=self.context['user'])
-        return self.context['user'], token.key
+        user = self.context['user']
+        token, created = Token.objects.get_or_create(user=user)
+        return user, token.key
 
 
 class UserSignUpSerializer(serializers.Serializer):
@@ -88,7 +89,7 @@ class UserSignUpSerializer(serializers.Serializer):
             UniqueValidator(queryset=User.objects.all())
         ]
     )
-    
+
     # Phone number
     phone_regex = RegexValidator(
         regex=r'\+?1?\d{9,15}$',
@@ -137,7 +138,6 @@ class UserSignUpSerializer(serializers.Serializer):
         msg = EmailMultiAlternatives(subject, content, from_email, [user.email])
         msg.attach_alternative(content, 'text/html')
         msg.send()
-
 
     def gen_verification_token(self, user):
         """Create JWT token that the user can use to verify its account."""

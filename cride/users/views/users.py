@@ -81,7 +81,6 @@ class UserViewSet(mixins.RetrieveModelMixin,
         data = UserModelSerializer(user).data
         return Response(data)
 
-
     @action(detail=False, methods=['post'])
     def signup(self, request):
         """User sign up."""
