@@ -5,7 +5,7 @@ load-plugins=pylint_common, pylint_django, pylint_celery
 max-line-length=120
 
 [MESSAGES CONTROL]
-disable=missing-docstring,invalid-name
+disable=missing-docstring,invalid-name,arguments-differ
 
 [DESIGN]
 max-parents=13
