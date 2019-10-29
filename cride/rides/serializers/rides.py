@@ -25,7 +25,6 @@ class RideModelSerializer(serializers.ModelSerializer):
 
     passengers = UserModelSerializer(read_only=True, many=True)
 
-    
     class Meta:
         """Meta class."""
         model = Ride

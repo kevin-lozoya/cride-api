@@ -23,7 +23,8 @@ from cride.rides.serializers import (
     CreateRideSerializer,
     RideModelSerializer,
     JoinRideSerializer,
-    EndRideSerializer
+    EndRideSerializer,
+    CreateRideRatingSerializer
 )
 
 # Utilities
@@ -64,10 +65,12 @@ class RideViewSet(mixins.ListModelMixin,
         """Return serialzier based on action."""
         if self.action == 'create':
             return CreateRideSerializer
-        elif self.action == 'join':
+        if self.action == 'join':
             return JoinRideSerializer
-        elif self.action == 'finish':
+        if self.action == 'finish':
             return EndRideSerializer
+        if self.action == 'rate':
+            return CreateRideRatingSerializer
         return RideModelSerializer
 
     def get_queryset(self):
@@ -81,7 +84,7 @@ class RideViewSet(mixins.ListModelMixin,
             )
         return self.circle.ride_set.all()
 
-    # TODO modificar lógina, me parece enrevesado
+    # TODO modificar lógica, me parece enrevesado
     @action(detail=True, methods=['post'])
     def join(self, request, *args, **kwargs):
         """Add requesting user to ride."""
@@ -113,3 +116,16 @@ class RideViewSet(mixins.ListModelMixin,
         ride = serializer.save()
         data = RideModelSerializer(ride).data
         return Response(data, status=status.HTTP_200_OK)
+
+    @action(detail=True, methods=['post'])
+    def rate(self, request, *args, **kwargs):
+        """Rate ride."""
+        ride = self.get_object()
+        serializer_class = self.get_serializer_class()
+        context = self.get_serializer_context()
+        context['ride'] = ride
+        serializer = serializer_class(data=request.data, context=context)
+        serializer.is_valid(raise_exception=True)
+        ride = serializer.save()
+        data = RideModelSerializer(ride).data
+        return Response(data, status=status.HTTP_201_CREATED)
