@@ -16,7 +16,7 @@ class IsActiveCircleMember(BasePermission):
 
     def has_permission(self, request, view):
         """Vefiry user is an active member of the circle."""
-        
+
         try:
             Membership.objects.get(
                 user=request.user,
@@ -39,4 +39,3 @@ class IfSelfMember(BasePermission):
     def has_object_permission(self, request, view, obj):
         """Allow access only if member is owned by the requesting user."""
         return request.user == obj.user
-

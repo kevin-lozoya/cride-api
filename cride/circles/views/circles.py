@@ -18,7 +18,6 @@ from cride.circles.permissions import IsCircleAdmin
 from cride.circles.serializers import CircleModelSerializer
 
 
-
 class CircleViewSet(mixins.CreateModelMixin,
                     mixins.RetrieveModelMixin,
                     mixins.UpdateModelMixin,

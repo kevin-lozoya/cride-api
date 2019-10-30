@@ -1,1 +1,1 @@
-from .invitations import *
+from .invitations import *  # noqa F403

@@ -7,6 +7,7 @@ from cride.circles.models import Circle, Membership
 from cride.users.models import User, Profile
 from cride.rides.models import Ride
 
+
 def load_circles(filename):
     with open(filename, 'r') as csvfile:
         reader = csv.reader(csvfile)
@@ -21,6 +22,7 @@ def load_circles(filename):
                 members_limit=0 if row[4] == '0' else int(row[4])
             )
             print(c)
+
 
 load_circles('circles.csv')
 

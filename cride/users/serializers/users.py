@@ -10,6 +10,9 @@ from rest_framework import serializers
 from rest_framework.authtoken.models import Token
 from rest_framework.validators import UniqueValidator
 
+# JWT
+import jwt
+
 # Models
 from cride.users.models import User, Profile
 
@@ -69,7 +72,7 @@ class UserLoginSerializer(serializers.Serializer):
 
 class UserSignUpSerializer(serializers.Serializer):  # pylint: disable=abstract-method
     """User sign up serializer.
-    
+
     Handle sign up data validation and user/profile creation.
     """
 

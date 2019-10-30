@@ -7,6 +7,7 @@ from rest_framework.generics import get_object_or_404
 # Models
 from cride.circles.models import Circle
 
+
 class AddCicleMixin(viewsets.GenericViewSet):
     """Add circle mixin.
 

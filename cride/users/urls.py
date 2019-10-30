@@ -12,6 +12,6 @@ from cride.users import views as user_views
 router = DefaultRouter()
 router.register(r'users', user_views.UserViewSet, basename='users')
 
-urlpatterns  = [
+urlpatterns = [
     path('', include(router.urls)),
 ]

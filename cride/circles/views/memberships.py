@@ -1,13 +1,13 @@
 """Circle membership views."""
 
 # Django REST Framework
-from rest_framework import mixins, status, viewsets
+from rest_framework import mixins, status
 from rest_framework.decorators import action
 from rest_framework.generics import get_object_or_404
 from rest_framework.response import Response
 
 # Model
-from cride.circles.models import Circle, Membership, Invitation
+from cride.circles.models import Membership, Invitation
 
 # Permissions
 from rest_framework.permissions import IsAuthenticated

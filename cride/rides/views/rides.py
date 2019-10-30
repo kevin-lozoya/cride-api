@@ -52,7 +52,7 @@ class RideViewSet(mixins.ListModelMixin,
             permissions.append(IsRideOwner)
         if self.action == 'join':
             permissions.append(IsNotRideOwner)
-        
+
         return [p() for p in permissions]
 
     def get_serializer_context(self):

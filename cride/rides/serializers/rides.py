@@ -38,7 +38,7 @@ class RideModelSerializer(serializers.ModelSerializer):
     def update(self, instance, data):
         """Allow updatess only before departure date."""
         now = timezone.now()
-        if  instance.departure_date <= now:
+        if instance.departure_date <= now:
             raise serializers.ValidationError('Ongoing rides cannot be modified.')
         return super(RideModelSerializer, self).update(instance, data)
 
@@ -128,7 +128,7 @@ class JoinRideSerializer(serializers.ModelSerializer):
         """Verify passenger exists and is a circle member."""
         try:
             user = User.objects.get(pk=data)
-        except  User.DoesNotExist:
+        except User.DoesNotExist:
             raise serializers.ValidationError('Invalid passenger.')
 
         circle = self.context['circle']
@@ -154,7 +154,6 @@ class JoinRideSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError('Passenger is already in this trip.')
 
         return data
-
 
     def update(self, instance, data):
         """Add passenger to ride, and update stats."""

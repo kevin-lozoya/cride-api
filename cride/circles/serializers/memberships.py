@@ -107,4 +107,3 @@ class AddMemberSerializer(serializers.Serializer):
         issuer.remaining_invitations -= 1
         issuer.save()
         return member
-            
