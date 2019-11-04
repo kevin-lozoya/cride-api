@@ -1,7 +1,9 @@
 Comparte Ride
 =============
 
-Group-bounded, invite-only, carpooling platform
+Este proyecto fue realizado para aprender [Django de forma avanzada](https://platzi.com/clases/django-avanzado/), utilizando también Django REST Framework.
+
+Se desarrola la parte backend de ComparteRide, una aplicación que te permite conectarte con usuarios que tienen automóviles y que te pueden ayudar a movilizarte a diferentes sitios de la ciudad.
 
 ## Índice
 
